@@ -1,0 +1,38 @@
+# config.yaml
+
+data:
+  train_dir: '../data/train'
+  val_dir: '../data/val'
+  test_dir: '../data/test'
+  num_workers: 4
+  augmentations:
+    horizontal_flip: True
+    rotation: 15
+    color_jitter: True
+    random_crop: True
+
+model:
+  num_classes: 50            # Adjust according to your dataset
+  model_type: 'alexnet'      # Options: 'alexnet', 'resnet', 'vggnet'
+  architecture: 'standard'  # Options: 'standard', 'selective'
+  batch_size: 64
+
+training:
+  learning_rate: 0.0001
+  num_epochs: 1
+  model_save_path: 'checkpoints'  # Base directory for saving models
+  high_percentage: 50        # Starting percentage of weights to update
+  low_percentage: 20         # Ending percentage of weights to update
+  percentage_schedule: 'linear'  # Options: 'linear', 'exponential'
+  world_size: 4              # Number of GPUs for multi-GPU training
+  backend: 'nccl'            # Backend for DDP (use 'nccl' for NVIDIA GPUs)
+  master_addr: 'localhost'   # Master address for DDP
+  master_port: '12355'       # Master port for DDP
+  early_stopping:
+    enabled: True
+    patience: 10  # Number of epochs to wait for improvement
+
+logging:
+  log_dir: 'logs'            # Base directory for logs
+  log_interval: 10
+  graphs_dir: 'graphs'
